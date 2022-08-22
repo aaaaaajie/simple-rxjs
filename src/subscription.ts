@@ -1,11 +1,11 @@
-import { SubscriptionLike, TeardownLogic1 } from "./types";
+import { SubscriptionLike, TeardownLogic } from "./types";
 import { isFunction } from "./util";
 
 export class Subscription implements SubscriptionLike {
 
     closed = false;
 
-    _finalizers: TeardownLogic1[] = [];
+    _finalizers: TeardownLogic[] = [];
 
     unsubscribe(): void {
         for (const ob of this._finalizers) {
@@ -18,9 +18,9 @@ export class Subscription implements SubscriptionLike {
         }
     }
 
-    add(tl: TeardownLogic1) {
-        if (tl) {
-            this._finalizers.push(tl);
+    add(teardown: TeardownLogic) {
+        if (teardown) {
+            this._finalizers.push(teardown);
         }
     }
 }

@@ -10,4 +10,4 @@ export interface SubscriptionLike {
     readonly closed: boolean;
 }
 
-export type TeardownLogic1 = Subscription | (() => void) | void;
+export type TeardownLogic = Subscription | (() => void) | void;

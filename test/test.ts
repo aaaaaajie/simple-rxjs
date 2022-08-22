@@ -1,5 +1,5 @@
-import { Observable } from "../observable";
-import { Subscription } from "../subscription";
+import { Observable } from "../src/observable";
+import { Subscription } from "../src/subscription";
 
 const ob = new Observable(observer => {
     observer.next(1);
