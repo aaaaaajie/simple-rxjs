@@ -1,11 +1,14 @@
+import { Operator } from "./operator/operator";
 import { Subscriber } from "./subscriber";
 import { Subscription } from "./subscription";
 import { TeardownLogic } from "./types";
-import { isSubscriber } from "./util";
+import { isSubscriber, pipeFromArray } from "./util";
 
 export class Observable<T> {
 
   source: Observable<any> | undefined;
+
+  operator?: Operator<any, T>;
 
   constructor(_subscribe?: (subscriber: Subscriber<T>) => TeardownLogic) {
     if (_subscribe) {
@@ -17,9 +20,17 @@ export class Observable<T> {
     return new Observable(subscribe);
   }
 
-  pipe() {}
+  pipe(...operations: Function[]): Observable<any> {
+    return pipeFromArray(operations)(this);
+  }
 
-  /** @internal */
+  public lift<R>(operator?: Operator<any, any>): Observable<R> {
+    const observable = new Observable<R>();
+    observable.source = this;
+    observable.operator = operator;
+    return observable;
+  }
+
   protected _subscribe(subscriber: Subscriber<T>): TeardownLogic {}
 
   subscribe(
@@ -27,7 +38,8 @@ export class Observable<T> {
     error?: ((error: any) => void) | null,
     complete?: (() => void) | null): Subscription {
     const subscriber = isSubscriber(next) ? next : new Subscriber(next as (value: T) => void, error, complete);
-    subscriber.add(this._subscribe(subscriber));
+    const { operator, source } = this;
+    subscriber.add(operator ? operator.call(subscriber, source) : this._subscribe(subscriber));
     return subscriber;
   }
 }

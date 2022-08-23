@@ -16,7 +16,21 @@ export function isObserver<T>(value: any): value is Observer<T> {
 
 export function isSubscription(value: any): value is Subscription {
     return (
-      value instanceof Subscription ||
-      (value && 'closed' in value && isFunction(value.remove) && isFunction(value.add) && isFunction(value.unsubscribe))
+        value instanceof Subscription ||
+        (value && 'closed' in value && isFunction(value.remove) && isFunction(value.add) && isFunction(value.unsubscribe))
     );
-  }
+}
+
+export function pipeFromArray(fns: Array<Function>): Function {
+    if (fns.length === 0) {
+        return (x: any) => x;
+    }
+
+    if (fns.length === 1) {
+        return fns[0];
+    }
+
+    return (input: any) => {
+        return fns.reduce((prev: any, fn: Function) => fn(prev), input);
+    };
+}
