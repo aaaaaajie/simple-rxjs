@@ -28,5 +28,5 @@ function asapSchedulerMain() {
 }
 
 // syncSchedulerMain();
-asyncSchedulerMain();
+// asyncSchedulerMain();
 asapSchedulerMain();

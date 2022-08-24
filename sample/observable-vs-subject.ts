@@ -63,6 +63,6 @@ function multicastSubject() {
 
 // coldObservable()
 // hotSubject();
-// unicastObservable();
-// multicastSubject();
+unicastObservable();
+multicastSubject();
 

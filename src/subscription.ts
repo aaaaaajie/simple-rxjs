@@ -8,12 +8,16 @@ export class Subscription implements SubscriptionLike {
     _finalizers: TeardownLogic[] = [];
 
     unsubscribe(): void {
-        for (const ob of this._finalizers) {
-            if (isFunction(ob)) {
-                ob();
-            }
-            if (ob instanceof Subscription) {
-                ob.unsubscribe();
+        if (!this.closed) {
+            this.closed = true;
+            for (let i = 0; i < this._finalizers.length; i++) {
+                const item = this._finalizers[i];
+                if (isFunction(item)) {
+                    item();
+                }
+                if (item instanceof Subscription) {
+                    this._finalizers.splice(i, 1);
+                }
             }
         }
     }
