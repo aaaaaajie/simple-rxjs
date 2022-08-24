@@ -1,0 +1,22 @@
+{
+  "name": "simple-rxjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaaaaajie/simple-rxjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aaaaaajie/simple-rxjs/issues"
+  },
+  "homepage": "https://github.com/aaaaaajie/simple-rxjs#readme",
+  "dependencies": {
+    "rxjs": "^6.6.7"
+  }
+}
