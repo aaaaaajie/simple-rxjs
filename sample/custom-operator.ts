@@ -17,7 +17,7 @@ const isEven = () => {
 const odd = () => {
     const operator: Operator<any, any> = {
         call(subscriber: Subscriber<any>, source: any) {
-            const subscription = source.subscribe((x: any) => subscriber.next(x % 2 === 0));
+            const subscription = source.subscribe((x: any) => subscriber.next(x % 2 !== 0));
             return () => {
                 subscription.unsubscribe();
             };
@@ -38,6 +38,4 @@ new Observable(observer => {
     observer.next(7);
 })
     .lift(odd())
-    .subscribe(x => {
-        console.log(x);
-    })
+    .subscribe(console.log)

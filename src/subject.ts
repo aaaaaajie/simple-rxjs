@@ -23,8 +23,7 @@ export class Subject<T> extends Observable<T> implements SubscriptionLike {
     }
 
     unsubscribe(): void {
-        throw new Error("Method not implemented.");
     }
-
+    
 
 }
